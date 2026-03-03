@@ -1,3 +1,4 @@
+import 'package:api_toolbox_t6/pages/age_predict_page.dart';
 import 'package:api_toolbox_t6/pages/gender_predict_page.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,12 @@ class MainMenu extends StatelessWidget {
 
               children: [
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PredictAge()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.deepOrange,

@@ -1,21 +1,27 @@
-import 'package:api_toolbox_t6/models/gender_prediction.dart';
+import 'package:api_toolbox_t6/models/age_prediction.dart';
 import 'package:api_toolbox_t6/services/http_service.dart';
 import 'package:api_toolbox_t6/widgets/single_field_form.dart';
 import 'package:flutter/material.dart';
 
-class PredictGender extends StatefulWidget {
-  const PredictGender({super.key});
+class PredictAge extends StatefulWidget {
+  const PredictAge({super.key});
 
   @override
-  State<PredictGender> createState() => _PredictGenderState();
+  State<PredictAge> createState() => _PredictAgeState();
 }
 
-class _PredictGenderState extends State<PredictGender> {
-  late GenderPrediction prediction;
+class _PredictAgeState extends State<PredictAge> {
+  late AgePrediction prediction = AgePrediction(
+    count: 5000,
+    name: "Cesar",
+    age: 20,
+  );
+
   final inputController = TextEditingController();
-  var viewResults = false;
+  var viewResults = true;
 
   void showResults(String inName) async {
+    //Revisa el campo antes de mandar la solicitud.
     if (inName.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -31,6 +37,7 @@ class _PredictGenderState extends State<PredictGender> {
       resetPage();
       return;
     }
+
     if (RegExp(r'^\p{L}+$', unicode: true).hasMatch(inName.trim()) == false) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -47,7 +54,8 @@ class _PredictGenderState extends State<PredictGender> {
       return;
     }
 
-    var res = await HttpService().getGenderByName(inName);
+    //Revisa la respuesta dada por el servidor.
+    var res = await HttpService().getAgeByName(inName);
 
     if (res.runtimeType == ErrorDescription) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -61,11 +69,27 @@ class _PredictGenderState extends State<PredictGender> {
           showCloseIcon: true,
         ),
       );
-    } else if (res.runtimeType == GenderPrediction) {
-      setState(() {
-        prediction = res;
-        viewResults = true;
-      });
+    } else if (res.runtimeType == AgePrediction) {
+      prediction = res;
+
+      if (prediction.age == 0) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              res.toString(),
+              style: TextStyle(fontWeight: FontWeight(700)),
+            ),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red,
+            showCloseIcon: true,
+          ),
+        );
+      } else {
+        setState(() {
+          prediction = res;
+          viewResults = true;
+        });
+      }
     }
   }
 
@@ -77,23 +101,17 @@ class _PredictGenderState extends State<PredictGender> {
   }
 
   @override
-  void dispose() {
-    inputController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Predictor de Genero"),
-        backgroundColor: Colors.purple,
+        title: Text("Predictor de Edad"),
+        backgroundColor: Colors.deepOrange,
         foregroundColor: Colors.white,
       ),
       body: Column(
         children: [
           SingleFieldForm(
-            label: "Insertar el Nombre",
+            label: "Introduzca el Nombre",
             inputController: inputController,
             b1Text: "Predecir",
             b2Text: "Limpiar",
@@ -105,32 +123,26 @@ class _PredictGenderState extends State<PredictGender> {
               ? Card(
                   margin: EdgeInsets.all(6),
                   child: Padding(
-                    padding: EdgeInsetsGeometry.all(20.0),
+                    padding: EdgeInsetsGeometry.all(20),
                     child: Column(
                       children: [
-                        Text("El Nombre"),
+                        Text("El nombre:"),
                         Text(
-                          prediction.name!.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight(700),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text("Es del genero"),
-                        Text(
-                          prediction.gender!.toUpperCase(),
+                          prediction.name,
                           style: TextStyle(
                             fontSize: 50,
                             fontWeight: FontWeight(700),
-                            color: prediction.gender == "male"
-                                ? Colors.lightBlue
-                                : Colors.pink,
                           ),
                         ),
+                        Text("Es de la Edad: "),
                         Text(
-                          "Con una probabilidad del ${prediction.probability! * 100} %",
+                          prediction.age.toString(),
+                          style: TextStyle(
+                            fontSize: 50,
+                            fontWeight: FontWeight(700),
+                          ),
                         ),
+                        Text("En ${prediction.count} Casos"),
                       ],
                     ),
                   ),
