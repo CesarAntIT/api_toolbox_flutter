@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:api_toolbox_t6/models/age_prediction.dart';
 import 'package:api_toolbox_t6/models/gender_prediction.dart';
+import 'package:api_toolbox_t6/models/pokemon.dart';
 import 'package:api_toolbox_t6/models/university.dart';
 import 'package:api_toolbox_t6/models/weather.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,17 @@ class HttpService {
       return returnValue;
     } else {
       return ErrorDescription("ERROR: No se pudo obtener los datos de la API");
+    }
+  }
+
+  Future<Pokemon> getPokemon(String name) async {
+    var url = Uri.parse('https://pokeapi.co/api/v2/pokemon/$name');
+
+    final res = await get(url);
+    if (res.statusCode == 200) {
+      return Pokemon.fromJson(jsonDecode(res.body));
+    } else {
+      throw Exception("No se encontró el Pokémon");
     }
   }
 }

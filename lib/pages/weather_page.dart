@@ -112,14 +112,7 @@ class _WeatherDrState extends State<WeatherDr> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                Container(
-                  height: 2,
-                  decoration: BoxDecoration(
-                    border: BoxBorder.symmetric(
-                      horizontal: BorderSide(width: 0.5),
-                    ),
-                  ),
-                ),
+                Divider(height: 30),
                 Icon(getWeatherIcon(currentWeather.weatherCode), size: 200),
                 Row(
                   children: [
