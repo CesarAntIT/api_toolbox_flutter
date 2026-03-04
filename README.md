@@ -1,17 +1,15 @@
-# api_toolbox_t6
-
-A new Flutter project.
+# API Toolbox in Flutter
+### By CesarAnt
 
 ## Getting Started
+Esta es una aplicación creada para la Tarea 6 de la materia TDS-011.
 
-This project is a starting point for a Flutter application.
+Tiene 6 funciones que consumen APIs, todas accesibles con el menú principal de la aplicación.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Las funciones son:
+* Predecir el Genero basado en el Nombre
+* Predecir la edad basada en el Nombre
+* Mostrar las universidades según el país.
+* Mostrar datos de un Pokemón según su Nombre o ID.
+* Mostrar el clima actual en República Dominicana
+* Mostrar 3 Noticias/Posts en una página de WordPress
