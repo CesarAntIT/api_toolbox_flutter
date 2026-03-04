@@ -18,7 +18,7 @@ class _PredictAgeState extends State<PredictAge> {
   );
 
   final inputController = TextEditingController();
-  var viewResults = true;
+  var viewResults = false;
 
   void showResults(String inName) async {
     //Revisa el campo antes de mandar la solicitud.
@@ -93,6 +93,60 @@ class _PredictAgeState extends State<PredictAge> {
     }
   }
 
+  String ageLabel(int age) {
+    if (age > 49) {
+      return "Anciano";
+    } else if (26 <= age && age < 50) {
+      return "Adulto";
+    } else if (18 <= age && age < 26) {
+      return "Joven Adulto";
+    } else if (13 <= age && age < 18) {
+      return "Adolescente";
+    } else if (3 <= age && age < 13) {
+      return "Niño";
+    } else if (3 > age) {
+      return "Bebe";
+    } else {
+      return "Desconocido";
+    }
+  }
+
+  Widget ageImage(int age) {
+    if (age > 49) {
+      return Image(
+        image: AssetImage("assets/images/ages/Ancianos.jpg"),
+        fit: BoxFit.scaleDown,
+      );
+    } else if (26 <= age && age < 50) {
+      return Image(
+        image: AssetImage("assets/images/ages/Adultos.jpg"),
+        fit: BoxFit.scaleDown,
+      );
+    } else if (18 <= age && age < 26) {
+      return Image(
+        image: AssetImage("assets/images/ages/Jovenes_adultos.jpg"),
+        fit: BoxFit.scaleDown,
+      );
+    } else if (13 <= age && age < 18) {
+      return Image(
+        image: AssetImage("assets/images/ages/Adolescentes.jpg"),
+        fit: BoxFit.scaleDown,
+      );
+    } else if (3 <= age && age < 13) {
+      return Image(
+        image: AssetImage("assets/images/ages/Ninos.jpg"),
+        fit: BoxFit.scaleDown,
+      );
+    } else if (3 > age) {
+      return Image(
+        image: AssetImage("assets/images/ages/Bebes.jpg"),
+        fit: BoxFit.scaleDown,
+      );
+    } else {
+      return Container();
+    }
+  }
+
   void resetPage() {
     setState(() {
       viewResults = false;
@@ -134,15 +188,23 @@ class _PredictAgeState extends State<PredictAge> {
                             fontWeight: FontWeight(700),
                           ),
                         ),
-                        Text("Es de la Edad: "),
+                        Text("Es de un: "),
+                        Container(
+                          height: 200,
+                          width: 200,
+                          child: ageImage(prediction.age),
+                        ),
                         Text(
-                          prediction.age.toString(),
+                          ageLabel(prediction.age),
                           style: TextStyle(
                             fontSize: 50,
                             fontWeight: FontWeight(700),
                           ),
                         ),
-                        Text("En ${prediction.count} Casos"),
+
+                        Text(
+                          "Con ${prediction.age} años En ${prediction.count} Casos",
+                        ),
                       ],
                     ),
                   ),
