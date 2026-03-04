@@ -1,6 +1,7 @@
 import 'package:api_toolbox_t6/pages/age_predict_page.dart';
 import 'package:api_toolbox_t6/pages/gender_predict_page.dart';
 import 'package:api_toolbox_t6/pages/unis_country_page.dart';
+import 'package:api_toolbox_t6/pages/weather_page.dart';
 import 'package:flutter/material.dart';
 
 class MainMenu extends StatelessWidget {
@@ -75,7 +76,12 @@ class MainMenu extends StatelessWidget {
                   icon: Icon(Icons.school),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WeatherDr()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.amber,

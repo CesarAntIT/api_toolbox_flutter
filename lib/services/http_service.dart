@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:api_toolbox_t6/models/age_prediction.dart';
 import 'package:api_toolbox_t6/models/gender_prediction.dart';
 import 'package:api_toolbox_t6/models/university.dart';
+import 'package:api_toolbox_t6/models/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -60,6 +61,21 @@ class HttpService {
       return decodedData.map((item) => University.fromJson(item)).toList();
     } else {
       return ErrorDescription("ERROR: Ocurrió un error al solicitar los datos");
+    }
+  }
+
+  Future<dynamic> getCurrentWeather() async {
+    var url = Uri.parse(
+      "https://api.open-meteo.com/v1/forecast?latitude=18.4719&longitude=-69.8923&current=relative_humidity_2m,temperature_2m,wind_speed_10m,wind_direction_10m,weather_code&timezone=auto",
+    );
+
+    final res = await get(url);
+    if (res.statusCode == 200) {
+      var returnValue = Weather.fromJson(json.decode(res.body));
+
+      return returnValue;
+    } else {
+      return ErrorDescription("ERROR: No se pudo obtener los datos de la API");
     }
   }
 }
