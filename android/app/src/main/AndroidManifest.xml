@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="androis.permission.ACCESS_NETWORK_STATE"/>
+
     <application
-        android:label="api_toolbox_t6"
+        android:label="API ToolBox (T6)"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
