@@ -5,6 +5,7 @@ import 'package:api_toolbox_t6/models/gender_prediction.dart';
 import 'package:api_toolbox_t6/models/pokemon.dart';
 import 'package:api_toolbox_t6/models/university.dart';
 import 'package:api_toolbox_t6/models/weather.dart';
+import 'package:api_toolbox_t6/models/wordpress_post.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -88,6 +89,21 @@ class HttpService {
       return Pokemon.fromJson(jsonDecode(res.body));
     } else {
       throw Exception("No se encontró el Pokémon");
+    }
+  }
+
+  Future<List<WordpressPost>> getLatestsPosts(String domain) async {
+    var url = Uri.parse("https://$domain/wp-json/wp/v2/posts?per_page=3");
+
+    final res = await get(url);
+    if (res.statusCode == 200) {
+      final List<dynamic> jsonPosts = json.decode(res.body);
+      var returnValue = jsonPosts
+          .map((post) => WordpressPost.fromJson(post))
+          .toList();
+      return returnValue;
+    } else {
+      throw Exception("ERROR: Error al conectar con WordPress");
     }
   }
 }
