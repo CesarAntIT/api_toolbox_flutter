@@ -1,3 +1,4 @@
+import 'package:api_toolbox_t6/pages/about_page.dart';
 import 'package:api_toolbox_t6/pages/age_predict_page.dart';
 import 'package:api_toolbox_t6/pages/gender_predict_page.dart';
 import 'package:api_toolbox_t6/pages/pokedex_page.dart';
@@ -133,7 +134,12 @@ class MainMenu extends StatelessWidget {
                 backgroundColor: Colors.grey,
                 foregroundColor: Colors.grey[800],
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AboutPage()),
+                );
+              },
               child: Row(children: [Icon(Icons.info), Text("Acerca De")]),
             ),
           ),

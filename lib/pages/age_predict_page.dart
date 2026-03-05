@@ -189,7 +189,7 @@ class _PredictAgeState extends State<PredictAge> {
                           ),
                         ),
                         Text("Es de un: "),
-                        Container(
+                        SizedBox(
                           height: 200,
                           width: 200,
                           child: ageImage(prediction.age),
